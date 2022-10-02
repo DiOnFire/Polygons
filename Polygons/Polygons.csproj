@@ -57,6 +57,8 @@
     <Compile Include="Src\Renderer\Renderer.cs" />
     <Compile Include="Src\Shape\Shape.cs" />
     <Compile Include="Src\Shape\Types\Circle.cs" />
+    <Compile Include="Src\Shape\Types\Square.cs" />
+    <Compile Include="Src\Shape\Types\Triangle.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

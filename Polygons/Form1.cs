@@ -23,20 +23,17 @@ namespace Polygons
 
         private void OnMouseClick(object sender, MouseEventArgs e)
         {
-            switch (e.Button)
+            if (e.Button != MouseButtons.Left) return;
+            switch (buffer.SelectedVertex)
             {
-                case MouseButtons.Left:
-                    if (buffer.isDragging)
-                    {
-                        buffer.StopDragging();
-                    } else
-                    {
-                        buffer.AddShape(new Circle(e.X, e.Y));
-                    }
-                    
+                case Renderer.Renderer.Vertex.CIRCLE:
+                    buffer.AddShape(new Circle(e.X, e.Y));
                     break;
-                case MouseButtons.Right:
-                    buffer.TryDrag(e.X, e.Y);
+                case Renderer.Renderer.Vertex.SQUARE:
+                    buffer.AddShape(new Square(e.X, e.Y));
+                    break;
+                case Renderer.Renderer.Vertex.TRIANGLE:
+                    buffer.AddShape(new Triangle(e.X, e.Y));
                     break;
             }
         }
@@ -45,29 +42,43 @@ namespace Polygons
         {
             if (e.Button == MouseButtons.Right)
             {
-                buffer.Drag(e.X, e.Y);
+                buffer.TryDrag(e.X, e.Y);
             }
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (buffer.isDragging)
-            {
-                buffer.Drag(e.X, e.Y);
-                Refresh();
-                buffer.ReRender();
-            }
-            
+            if (!buffer.IsDragging) return;
+            buffer.Drag(e.X, e.Y);
+            Refresh();
+            buffer.ReRender();
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
             buffer.StopDragging();
+            buffer.ReRender();
         }
 
-        private void OnResize(object sender, EventArgs e)
+        private void OnPaint(object sender, PaintEventArgs e)
         {
-            
+            buffer.Graphics = CreateGraphics();
+            buffer.ReRender();
+        }
+
+        private void circleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            buffer.SelectedVertex = Renderer.Renderer.Vertex.CIRCLE;
+        }
+
+        private void squareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            buffer.SelectedVertex = Renderer.Renderer.Vertex.SQUARE;
+        }
+
+        private void triangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            buffer.SelectedVertex = Renderer.Renderer.Vertex.TRIANGLE;
         }
     }
 }

@@ -7,8 +7,28 @@ namespace Polygons.Renderer
     {
         private List<Shape.Shape> shapes;
         private Graphics graphics;
-        private int prevX, prevY;
-        public bool isDragging;
+        private bool isDragging;
+        private Vertex selected;
+
+        public enum Vertex
+        {
+            CIRCLE,
+            TRIANGLE,
+            SQUARE
+        }
+
+        public Vertex SelectedVertex
+        {
+            get { return selected; }
+            set { selected = value; }
+        }
+
+        public bool IsDragging { get { return isDragging; } }
+
+        public Graphics Graphics
+        {
+            set { graphics = value; }
+        }
 
         public Renderer(Graphics g)
         {
@@ -42,33 +62,24 @@ namespace Polygons.Renderer
             {
                 shape.IsDragging = false;
             }
-            isDragging = false;
+            
             ReRender();
+            isDragging = false;
         }
 
         public void Drag(int x, int y)
         {
-            if (!isDragging) return;
             foreach (Shape.Shape shape in shapes)
             {
                 if (shape.IsDragging)
                 {
-                    if (!isDragging)
-                    {
-                        shape.X = x;
-                        shape.Y = y;
-                    } 
-                    else
-                    {
-                        shape.X += x - prevX;
-                        shape.Y += y - prevY;
-                    }
+                    shape.X = x;
+                    shape.Y = y;
                     ReRender();
+                    break;
                 }
             }
-            prevX = x;
-            prevY = y;
-            
+
         }
 
         public void TryDrag(int x, int y)
@@ -78,7 +89,7 @@ namespace Polygons.Renderer
                 if (shape.IsInside(x, y))
                 {
                     shape.IsDragging = true;
-                
+                    isDragging = true;
                     ReRender();
                     break;
                 }

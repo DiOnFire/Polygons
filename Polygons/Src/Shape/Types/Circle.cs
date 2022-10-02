@@ -16,14 +16,7 @@ namespace Polygons.Shape
 
         public override void Draw(Graphics g)
         {
-            if (IsDragging)
-            {
-                g.FillEllipse(new SolidBrush(Color.Blue), X, Y, _radius, _radius);
-            }
-            else
-            {
-                g.DrawEllipse(Pens.Red, X, Y, _radius, _radius);
-            }
+                g.FillEllipse(new SolidBrush(Color.Red), X, Y, _radius, _radius);
         }
 
         public override bool IsInside(int x, int y)
