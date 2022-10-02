@@ -3,18 +3,14 @@ using System.Drawing;
 
 namespace Polygons.Renderer
 {
-    public class VertexBuffer
+    public class Renderer
     {
         private List<Shape.Shape> shapes;
         private Graphics graphics;
-        private Shape.Shape currentDragging;
+        private int prevX, prevY;
+        public bool isDragging;
 
-        public bool IsDragging
-        {
-            get { return currentDragging != null; }
-        }
-
-        public VertexBuffer(Graphics g)
+        public Renderer(Graphics g)
         {
             graphics = g;
             shapes = new List<Shape.Shape>();
@@ -37,26 +33,42 @@ namespace Polygons.Renderer
         public void AddShape(Shape.Shape shape)
         {
             shapes.Add(shape);
-            RenderShape(shape);
-        }
-
-        public void StartDragging(Shape.Shape shape)
-        {
-            currentDragging = shape;
-            currentDragging.Draw(graphics);
+            ReRender();
         }
 
         public void StopDragging()
         {
-            currentDragging = null;
+            foreach (Shape.Shape shape in shapes)
+            {
+                shape.IsDragging = false;
+            }
+            isDragging = false;
+            ReRender();
         }
 
         public void Drag(int x, int y)
         {
-                currentDragging.X = x;
-                currentDragging.Y = y;
-                RenderShape(currentDragging);
-                ReRender();
+            if (!isDragging) return;
+            foreach (Shape.Shape shape in shapes)
+            {
+                if (shape.IsDragging)
+                {
+                    if (!isDragging)
+                    {
+                        shape.X = x;
+                        shape.Y = y;
+                    } 
+                    else
+                    {
+                        shape.X += x - prevX;
+                        shape.Y += y - prevY;
+                    }
+                    ReRender();
+                }
+            }
+            prevX = x;
+            prevY = y;
+            
         }
 
         public void TryDrag(int x, int y)
@@ -65,7 +77,9 @@ namespace Polygons.Renderer
             {
                 if (shape.IsInside(x, y))
                 {
-                    StartDragging(shape);
+                    shape.IsDragging = true;
+                
+                    ReRender();
                     break;
                 }
             }

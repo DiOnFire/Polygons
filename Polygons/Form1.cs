@@ -7,7 +7,7 @@ namespace Polygons
 {
     public partial class Form1 : Form
     {
-        private VertexBuffer buffer;
+        private Renderer.Renderer buffer;
 
         public Form1()
         {
@@ -18,14 +18,26 @@ namespace Polygons
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            buffer = new VertexBuffer(CreateGraphics());
+            buffer = new Renderer.Renderer(CreateGraphics());
         }
 
         private void OnMouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            switch (e.Button)
             {
-                buffer.AddShape(new Circle(e.X, e.Y));
+                case MouseButtons.Left:
+                    if (buffer.isDragging)
+                    {
+                        buffer.StopDragging();
+                    } else
+                    {
+                        buffer.AddShape(new Circle(e.X, e.Y));
+                    }
+                    
+                    break;
+                case MouseButtons.Right:
+                    buffer.TryDrag(e.X, e.Y);
+                    break;
             }
         }
 
@@ -33,17 +45,19 @@ namespace Polygons
         {
             if (e.Button == MouseButtons.Right)
             {
-                buffer.TryDrag(e.X, e.Y);
+                buffer.Drag(e.X, e.Y);
             }
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (buffer.IsDragging)
+            if (buffer.isDragging)
             {
-                Refresh();
                 buffer.Drag(e.X, e.Y);
+                Refresh();
+                buffer.ReRender();
             }
+            
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
@@ -53,8 +67,7 @@ namespace Polygons
 
         private void OnResize(object sender, EventArgs e)
         {
-            Refresh();
-            buffer.ReRender();
+            
         }
     }
 }

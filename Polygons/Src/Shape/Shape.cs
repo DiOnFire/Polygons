@@ -6,18 +6,21 @@ namespace Polygons.Shape
     {
         private int _x;
         private int _y;
+        private bool _dragging;
         protected static int _radius = 10;
 
         protected Shape()
         {
             this._x = 0;
             this._y = 0;
+            this._dragging = false;
         }
 
         protected Shape(int x, int y)
         {
             this._x = x;
             this._y = y;
+            this._dragging = false;
         }
 
         public int X
@@ -30,6 +33,12 @@ namespace Polygons.Shape
         {
             get { return _y; }
             set { _y = value; }
+        }
+
+        public bool IsDragging
+        { 
+            get { return _dragging; }
+            set { _dragging = value; }
         }
 
         public abstract void Draw(Graphics g);
