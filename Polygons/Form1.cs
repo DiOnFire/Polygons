@@ -1,5 +1,4 @@
-﻿using Polygons.Renderer;
-using Polygons.Shape;
+﻿using Polygons.Shape;
 using System;
 using System.Windows.Forms;
 
@@ -7,7 +6,7 @@ namespace Polygons
 {
     public partial class Form1 : Form
     {
-        private Renderer.Renderer buffer;
+        private Renderer buffer;
 
         public Form1()
         {
@@ -18,7 +17,7 @@ namespace Polygons
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            buffer = new Renderer.Renderer(CreateGraphics());
+            buffer = new Renderer(CreateGraphics());
         }
 
         private void OnMouseClick(object sender, MouseEventArgs e)
@@ -26,16 +25,18 @@ namespace Polygons
             if (e.Button != MouseButtons.Left) return;
             switch (buffer.SelectedVertex)
             {
-                case Renderer.Renderer.Vertex.CIRCLE:
-                    buffer.AddShape(new Circle(e.X, e.Y));
+                case Renderer.Vertex.CIRCLE:
+                    buffer.AddShape(new Circle(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
                     break;
-                case Renderer.Renderer.Vertex.SQUARE:
-                    buffer.AddShape(new Square(e.X, e.Y));
+                case Renderer.Vertex.SQUARE:
+                    buffer.AddShape(new Square(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
                     break;
-                case Renderer.Renderer.Vertex.TRIANGLE:
+                case Renderer.Vertex.TRIANGLE:
                     buffer.AddShape(new Triangle(e.X, e.Y));
                     break;
             }
+            Refresh();
+            buffer.ReRender();
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -68,17 +69,17 @@ namespace Polygons
 
         private void circleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            buffer.SelectedVertex = Renderer.Renderer.Vertex.CIRCLE;
+            buffer.SelectedVertex = Renderer.Vertex.CIRCLE;
         }
 
         private void squareToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            buffer.SelectedVertex = Renderer.Renderer.Vertex.SQUARE;
+            buffer.SelectedVertex = Renderer.Vertex.SQUARE;
         }
 
         private void triangleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            buffer.SelectedVertex = Renderer.Renderer.Vertex.TRIANGLE;
+            buffer.SelectedVertex = Renderer.Vertex.TRIANGLE;
         }
     }
 }

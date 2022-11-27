@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Polygons.Renderer
+namespace Polygons
 {
     public class Renderer
     {
-        private List<Shape.Shape> shapes;
-        private Graphics graphics;
+        public List<Shape.Shape> shapes;
+        public Graphics graphics;
         private bool isDragging;
         private Vertex selected;
 
@@ -15,6 +15,12 @@ namespace Polygons.Renderer
             CIRCLE,
             TRIANGLE,
             SQUARE
+        }
+
+        public enum DrawAlgorithm
+        {
+            JARVIS,
+            DEFENITION
         }
 
         public Vertex SelectedVertex
@@ -38,10 +44,13 @@ namespace Polygons.Renderer
 
         public void ReRender()
         {
+            
             foreach (Shape.Shape shape in shapes)
             {
                 shape.Draw(graphics);
             }
+            if (shapes.Count < 2) return;
+            ConvexHullDefinition.Draw(this);
         }
 
         public void RenderShape(Shape.Shape shape)
@@ -73,8 +82,8 @@ namespace Polygons.Renderer
             {
                 if (shape.IsDragging)
                 {
-                    shape.X = x;
-                    shape.Y = y;
+                    shape.X = x - Shape.Shape._radius / 2;
+                    shape.Y = y - Shape.Shape._radius / 2;
                     ReRender();
                     break;
                 }

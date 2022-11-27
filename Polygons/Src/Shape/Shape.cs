@@ -7,7 +7,7 @@ namespace Polygons.Shape
         private int _x;
         private int _y;
         private bool _dragging;
-        protected static int _radius = 10;
+        public static int _radius = 50;
 
         protected Shape()
         {

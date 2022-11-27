@@ -8,7 +8,7 @@ namespace Polygons.Shape
 
         public override void Draw(Graphics g)
         {
-            g.FillRectangle(new SolidBrush(Color.Red), X, Y, 10, 10);
+            g.FillRectangle(new SolidBrush(Color.Red), X, Y, 50, 50);
         }
 
         public override bool IsInside(int x, int y)
