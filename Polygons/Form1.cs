@@ -22,19 +22,25 @@ namespace Polygons
 
         private void OnMouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
-            switch (buffer.SelectedVertex)
+            if (e.Button == MouseButtons.Left)
             {
-                case Renderer.Vertex.CIRCLE:
-                    buffer.AddShape(new Circle(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
-                    break;
-                case Renderer.Vertex.SQUARE:
-                    buffer.AddShape(new Square(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
-                    break;
-                case Renderer.Vertex.TRIANGLE:
-                    buffer.AddShape(new Triangle(e.X, e.Y));
-                    break;
+                switch (buffer.SelectedVertex)
+                {
+                    case Renderer.Vertex.CIRCLE:
+                        buffer.AddShape(new Circle(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
+                        break;
+                    case Renderer.Vertex.SQUARE:
+                        buffer.AddShape(new Square(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
+                        break;
+                    case Renderer.Vertex.TRIANGLE:
+                        buffer.AddShape(new Triangle(e.X, e.Y));
+                        break;
+                }
+            } else if (e.Button == MouseButtons.Right)
+            {
+                buffer.RemoveShape(e.X, e.Y);
             }
+            
             Refresh();
             buffer.ReRender();
         }

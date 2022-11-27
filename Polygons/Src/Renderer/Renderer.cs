@@ -65,6 +65,18 @@ namespace Polygons
             ReRender();
         }
 
+        public void RemoveShape(int x, int y)
+        {
+            if (isDragging) return;
+            foreach (Shape.Shape shape in shapes)
+            {
+                if (shape.IsInside(x, y)) {
+                    shapes.Remove(shape);
+                    return;
+                }
+            }
+        }
+
         public void StopDragging()
         {
             foreach (Shape.Shape shape in shapes)
