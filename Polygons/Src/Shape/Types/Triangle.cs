@@ -23,7 +23,7 @@ namespace Polygons.Shape
 
         public override bool IsInside(int x, int y)
         {
-            return y - Y + _radius / 2 >= 2 * X - 2 * x && y - Y + _radius / 2 >= 2 * x - 2 * X && y <= Y + _radius / 2;
+            return false;
         }
     }
 }
