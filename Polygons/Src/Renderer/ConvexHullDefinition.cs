@@ -2,7 +2,7 @@
 
 namespace Polygons
 {
-    class ConvexHullDefinition
+    sealed class ConvexHullDefinition
     {
         public static void Draw(Renderer renderer)
         {

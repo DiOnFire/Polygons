@@ -50,7 +50,7 @@ namespace Polygons
                 shape.Draw(graphics);
             }
             if (shapes.Count < 2) return;
-            ConvexHullDefinition.Draw(this);
+            ConvexHullJarvis.Draw(this);
         }
 
         public void RenderShape(Shape.Shape shape)
