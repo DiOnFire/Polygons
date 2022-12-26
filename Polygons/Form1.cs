@@ -20,45 +20,50 @@ namespace Polygons
             buffer = new Renderer(CreateGraphics());
         }
 
-        private void OnMouseClick(object sender, MouseEventArgs e)
+        private void ReRender()
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                switch (buffer.SelectedVertex)
-                {
-                    case Renderer.Vertex.CIRCLE:
-                        buffer.AddShape(new Circle(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
-                        break;
-                    case Renderer.Vertex.SQUARE:
-                        buffer.AddShape(new Square(e.X - Shape.Shape._radius / 2, e.Y - Shape.Shape._radius / 2));
-                        break;
-                    case Renderer.Vertex.TRIANGLE:
-                        buffer.AddShape(new Triangle(e.X, e.Y));
-                        break;
-                }
-            } else if (e.Button == MouseButtons.Right)
-            {
-                buffer.RemoveShape(e.X, e.Y);
-            }
-            
             Refresh();
             buffer.ReRender();
         }
 
+        private void AddShape(int x, int y)
+        {
+            switch (buffer.SelectedVertex)
+            {
+                case Renderer.Vertex.CIRCLE:
+                    buffer.AddShape(new Circle(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2));
+                    break;
+                case Renderer.Vertex.SQUARE:
+                    buffer.AddShape(new Square(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2));
+                    break;
+                case Renderer.Vertex.TRIANGLE:
+                    buffer.AddShape(new Triangle(x, y));
+                    break;
+            }
+        }
+
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Left)
             {
                 buffer.TryDrag(e.X, e.Y);
+                if (!buffer.IsDragging)
+                {
+                    AddShape(e.X, e.Y);
+                }
             }
+            else
+            {
+                buffer.RemoveShape(e.X, e.Y);
+            }
+            ReRender();
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (!buffer.IsDragging) return;
             buffer.Drag(e.X, e.Y);
-            Refresh();
-            buffer.ReRender();
+            ReRender();
         }
 
         private void OnMouseUp(object sender, MouseEventArgs e)
@@ -69,7 +74,6 @@ namespace Polygons
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-            buffer.Graphics = CreateGraphics();
             buffer.ReRender();
         }
 
