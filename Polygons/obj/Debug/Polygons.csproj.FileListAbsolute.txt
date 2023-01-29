@@ -8,3 +8,14 @@ C:\Users\bataron.maksim\Desktop\Polygons-master\Polygons\obj\Debug\Polygons.cspr
 C:\Users\bataron.maksim\Desktop\Polygons-master\Polygons\obj\Debug\Polygons.csproj.CoreCompileInputs.cache
 C:\Users\bataron.maksim\Desktop\Polygons-master\Polygons\obj\Debug\Polygons.exe
 C:\Users\bataron.maksim\Desktop\Polygons-master\Polygons\obj\Debug\Polygons.pdb
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\bin\Debug\Polygons.exe.config
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\bin\Debug\Polygons.exe
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\bin\Debug\Polygons.pdb
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.csproj.AssemblyReference.cache
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.csproj.SuggestedBindingRedirects.cache
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.Form1.resources
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.Properties.Resources.resources
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.csproj.GenerateResource.cache
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.csproj.CoreCompileInputs.cache
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.exe
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.pdb

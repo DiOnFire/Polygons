@@ -62,7 +62,7 @@ namespace Polygons
         public void AddShape(Shape.Shape shape)
         {
             shapes.Add(shape);
-            ReRender();
+            
         }
 
         public void RemoveShape(int x, int y)

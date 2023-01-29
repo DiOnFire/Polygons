@@ -43,28 +43,31 @@ namespace Polygons
                 }
             }
 
-            //renderer.graphics.DrawLine(
-            //        pen,
-            //        renderer.shapes[firstPoint].X + Shape.Shape._radius / 2,
-            //        renderer.shapes[firstPoint].Y + Shape.Shape._radius / 2,
-            //        renderer.shapes[newPoint].X + Shape.Shape._radius / 2,
-            //        renderer.shapes[newPoint].Y + Shape.Shape._radius / 2
-            //    );
-
             vectorX = renderer.shapes[newPoint].X - renderer.shapes[firstPoint].X;
             vectorY = renderer.shapes[newPoint].Y - renderer.shapes[firstPoint].Y;
+
+            renderer.graphics.DrawLine(
+                        pen,
+                        renderer.shapes[currentPoint].X + Shape.Shape._radius / 2,
+                        renderer.shapes[currentPoint].Y + Shape.Shape._radius / 2,
+                        renderer.shapes[newPoint].X + Shape.Shape._radius / 2,
+                        renderer.shapes[newPoint].Y + Shape.Shape._radius / 2
+                    );
+
+            
             currentPoint = newPoint;
+
+            
 
             // ostalnije tochki
 
             if (renderer.shapes.Count < 3) return;
-            
+
             do
             {
-                cos = 999;
+                cos = double.MaxValue;
                 for (int i = 0; i < renderer.shapes.Count; i++)
-                {
-                   
+                {  
                     int potentialVectorX = renderer.shapes[i].X - renderer.shapes[currentPoint].X;
                     int potentialVectorY = renderer.shapes[i].Y - renderer.shapes[currentPoint].Y;
 
@@ -81,9 +84,12 @@ namespace Polygons
                     {
                         cos = potentialCos;
                         newPoint = i;
+                        renderer.graphics.DrawRectangle(pen, renderer.shapes[i].X, renderer.shapes[i].Y, 10, 10);
                     }
                 }
-                
+
+                // в чем баг: такое ощущение, что этот цикл не видит дальше первых двух точек и рендерит только их, почему - чёрт его знает
+
                 renderer.graphics.DrawLine(
                         pen,
                         renderer.shapes[currentPoint].X + Shape.Shape._radius / 2,
@@ -92,12 +98,25 @@ namespace Polygons
                         renderer.shapes[newPoint].Y + Shape.Shape._radius / 2
                     );
 
+                
+
                 vectorX = renderer.shapes[newPoint].X - renderer.shapes[currentPoint].X;
                 vectorY = renderer.shapes[newPoint].Y - renderer.shapes[currentPoint].Y;
-                
-                currentPoint = newPoint;
                
+                currentPoint = newPoint;
+
+               
+
+                if (currentPoint == firstPoint)
+                {
+                    Console.WriteLine("operation end");
+                } else
+                {
+                    Console.WriteLine("operation not end");
+                }
+
             } while (currentPoint != firstPoint);
+            
         }
 
         // находим самую нижнюю левую точку (возвращаем индекс в листе)
