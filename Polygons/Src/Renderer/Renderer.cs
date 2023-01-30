@@ -6,6 +6,7 @@ namespace Polygons
     public class Renderer
     {
         public List<Shape.Shape> shapes;
+        public List<Shape.Shape> used= new List<Shape.Shape>();
         public Graphics graphics;
         private bool isDragging;
         private Vertex selected;
@@ -50,7 +51,8 @@ namespace Polygons
                 shape.Draw(graphics);
             }
             if (shapes.Count < 2) return;
-            ConvexHullJarvis.Draw(this);
+            used = ConvexHullJarvis.Draw(this);
+            
         }
 
         public void RenderShape(Shape.Shape shape)
@@ -114,6 +116,24 @@ namespace Polygons
                     ReRender();
                     break;
                 }
+            }
+        }
+
+        public void ClearGarbage(List<Shape.Shape> used)
+        {
+            if (shapes.Count < 3) return;
+            List<Shape.Shape> garbage = new List<Shape.Shape>();
+            for (int i = 0; i < shapes.Count; i++)
+            {
+                if (!used.Contains(shapes[i]))
+                {
+                    garbage.Add(shapes[i]);
+                }
+            }
+
+            foreach (Shape.Shape item in garbage)
+            {
+                shapes.Remove(item);
             }
         }
     }

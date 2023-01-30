@@ -6,14 +6,37 @@ namespace Polygons
 {
     sealed class ConvexHullJarvis
     {
-        public static void Draw(Renderer renderer)
+        public static double CalculateCos(
+            Shape.Shape vectorStart, 
+            Shape.Shape vectorEnd,
+            Shape.Shape potentialPoint)
+        {
+            double bc = Math.Sqrt((vectorEnd.X - potentialPoint.X) * (vectorEnd.X - potentialPoint.X)
+                +
+                (vectorEnd.Y - potentialPoint.Y) * (vectorEnd.Y - potentialPoint.Y));
+
+            double ac = Math.Sqrt((vectorStart.X - potentialPoint.X) * (vectorStart.X - potentialPoint.X)
+                +
+                (vectorStart.Y - potentialPoint.Y) * (vectorStart.Y - potentialPoint.Y));
+
+            double ab = Math.Sqrt((vectorStart.X - vectorEnd.X) * (vectorStart.X - vectorEnd.X)
+                +
+                (vectorStart.Y - vectorEnd.Y) * (vectorStart.Y - vectorEnd.Y));
+
+            double cos = (bc * bc - ac * ac + ab * ab) / (2 * bc * ab);
+            return cos;
+        }
+
+        public static List<Shape.Shape> Draw(Renderer renderer)
         {
             Pen pen = new Pen(new SolidBrush(Color.Blue));
 
             // Ищем первую точку (индекс в листе точек)
             int firstPoint = FindFirstPoint(renderer.shapes);
             int currentPoint = firstPoint;
-            int newPoint = 0;
+            int newPoint = 0, previousPoint;
+
+            List<Shape.Shape> used = new List<Shape.Shape>();
            
 
             // Для того, чтобы сгенерировать первый вектор, юзаем точку с кордами как у первой, но х будет далеко (-100)
@@ -43,9 +66,6 @@ namespace Polygons
                 }
             }
 
-            vectorX = renderer.shapes[newPoint].X - renderer.shapes[firstPoint].X;
-            vectorY = renderer.shapes[newPoint].Y - renderer.shapes[firstPoint].Y;
-
             renderer.graphics.DrawLine(
                         pen,
                         renderer.shapes[currentPoint].X + Shape.Shape._radius / 2,
@@ -56,67 +76,49 @@ namespace Polygons
 
             
             currentPoint = newPoint;
+            previousPoint = firstPoint;
 
-            
+            used.Add(renderer.shapes[currentPoint]);
+            used.Add(renderer.shapes[previousPoint]);
+
 
             // ostalnije tochki
 
-            if (renderer.shapes.Count < 3) return;
+            if (renderer.shapes.Count < 3) return used;
 
             do
             {
                 cos = double.MaxValue;
+                int potential = 0;
                 for (int i = 0; i < renderer.shapes.Count; i++)
-                {  
-                    int potentialVectorX = renderer.shapes[i].X - renderer.shapes[currentPoint].X;
-                    int potentialVectorY = renderer.shapes[i].Y - renderer.shapes[currentPoint].Y;
-
-                    double potentialCos =
-                        (vectorX * potentialVectorX + vectorY * potentialVectorY)
-                        /
-                        (
-                            Math.Sqrt(vectorX * vectorX + vectorY * vectorY)
-                            *
-                            Math.Sqrt(potentialVectorX * potentialVectorX + potentialVectorY * potentialVectorY)
-                        );
+                {
+                    Shape.Shape previous = renderer.shapes[previousPoint];
+                    Shape.Shape current = renderer.shapes[currentPoint];
+                    
+                    
+                    double potentialCos = CalculateCos(previous, current, renderer.shapes[i]);
 
                     if (potentialCos < cos)
                     {
+                        potential = i;
                         cos = potentialCos;
-                        newPoint = i;
-                        renderer.graphics.DrawRectangle(pen, renderer.shapes[i].X, renderer.shapes[i].Y, 10, 10);
                     }
                 }
-
-                // в чем баг: такое ощущение, что этот цикл не видит дальше первых двух точек и рендерит только их, почему - чёрт его знает
-
                 renderer.graphics.DrawLine(
-                        pen,
-                        renderer.shapes[currentPoint].X + Shape.Shape._radius / 2,
-                        renderer.shapes[currentPoint].Y + Shape.Shape._radius / 2,
-                        renderer.shapes[newPoint].X + Shape.Shape._radius / 2,
-                        renderer.shapes[newPoint].Y + Shape.Shape._radius / 2
-                    );
+                    pen,
+                    renderer.shapes[currentPoint].X + Shape.Shape._radius / 2,
+                    renderer.shapes[currentPoint].Y + Shape.Shape._radius / 2,
+                    renderer.shapes[potential].X + Shape.Shape._radius / 2,
+                    renderer.shapes[potential].Y  + Shape.Shape._radius / 2
+                );
 
-                
-
-                vectorX = renderer.shapes[newPoint].X - renderer.shapes[currentPoint].X;
-                vectorY = renderer.shapes[newPoint].Y - renderer.shapes[currentPoint].Y;
-               
-                currentPoint = newPoint;
-
-               
-
-                if (currentPoint == firstPoint)
-                {
-                    Console.WriteLine("operation end");
-                } else
-                {
-                    Console.WriteLine("operation not end");
-                }
+                previousPoint = currentPoint;
+                currentPoint = potential;
+                used.Add(renderer.shapes[currentPoint]);
 
             } while (currentPoint != firstPoint);
-            
+
+            return used;
         }
 
         // находим самую нижнюю левую точку (возвращаем индекс в листе)
