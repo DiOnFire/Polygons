@@ -5,9 +5,11 @@ namespace Polygons
 {
     public class Renderer
     {
-        public List<Shape.Shape> shapes;
-        public List<Shape.Shape> used= new List<Shape.Shape>();
-        public Graphics graphics;
+        public List<Shape.Shape> _shapes;
+        public List<Shape.Shape> _used = new List<Shape.Shape>();
+        private IConvexHull _jarvis;
+        private IConvexHull _definition;
+        public Graphics _graphics;
         private bool isDragging;
         private Vertex selected;
 
@@ -34,46 +36,48 @@ namespace Polygons
 
         public Graphics Graphics
         {
-            set { graphics = value; }
+            set { _graphics = value; }
         }
 
         public Renderer(Graphics g)
         {
-            graphics = g;
-            shapes = new List<Shape.Shape>();
+            _graphics = g;
+            _shapes = new List<Shape.Shape>();
+            _jarvis = new Jarvis(this);
+            _definition = new Definition(this);
         }
 
         public void ReRender()
         {
             
-            foreach (Shape.Shape shape in shapes)
+            foreach (Shape.Shape shape in _shapes)
             {
-                shape.Draw(graphics);
+                shape.Draw(_graphics);
             }
-            if (shapes.Count < 2) return;
-            used = ConvexHullJarvis.Draw(this);
+            if (_shapes.Count < 2) return;
+            _used = Jarvis.Draw(this);
             
         }
 
         public void RenderShape(Shape.Shape shape)
         {
             ReRender();
-            shape.Draw(graphics);
+            shape.Draw(_graphics);
         }
 
         public void AddShape(Shape.Shape shape)
         {
-            shapes.Add(shape);
+            _shapes.Add(shape);
             
         }
 
         public void RemoveShape(int x, int y)
         {
             if (isDragging) return;
-            foreach (Shape.Shape shape in shapes)
+            foreach (Shape.Shape shape in _shapes)
             {
                 if (shape.IsInside(x, y)) {
-                    shapes.Remove(shape);
+                    _shapes.Remove(shape);
                     return;
                 }
             }
@@ -81,7 +85,7 @@ namespace Polygons
 
         public void StopDragging()
         {
-            foreach (Shape.Shape shape in shapes)
+            foreach (Shape.Shape shape in _shapes)
             {
                 shape.IsDragging = false;
             }
@@ -92,7 +96,7 @@ namespace Polygons
 
         public void Drag(int x, int y)
         {
-            foreach (Shape.Shape shape in shapes)
+            foreach (Shape.Shape shape in _shapes)
             {
                 if (shape.IsDragging)
                 {
@@ -107,7 +111,7 @@ namespace Polygons
 
         public void TryDrag(int x, int y)
         {
-            foreach (Shape.Shape shape in shapes)
+            foreach (Shape.Shape shape in _shapes)
             {
                 if (shape.IsInside(x, y))
                 {
@@ -121,19 +125,19 @@ namespace Polygons
 
         public void ClearGarbage(List<Shape.Shape> used)
         {
-            if (shapes.Count < 3) return;
+            if (_shapes.Count < 3) return;
             List<Shape.Shape> garbage = new List<Shape.Shape>();
-            for (int i = 0; i < shapes.Count; i++)
+            for (int i = 0; i < _shapes.Count; i++)
             {
-                if (!used.Contains(shapes[i]))
+                if (!used.Contains(_shapes[i]))
                 {
-                    garbage.Add(shapes[i]);
+                    garbage.Add(_shapes[i]);
                 }
             }
 
             foreach (Shape.Shape item in garbage)
             {
-                shapes.Remove(item);
+                _shapes.Remove(item);
             }
         }
     }

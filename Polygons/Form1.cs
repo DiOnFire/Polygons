@@ -69,9 +69,8 @@ namespace Polygons
         private void OnMouseUp(object sender, MouseEventArgs e)
         {
             buffer.StopDragging();
-            buffer.ClearGarbage(buffer.used);
+            buffer.ClearGarbage(buffer._used);
             ReRender();
-           
         }
 
         private void OnPaint(object sender, PaintEventArgs e)

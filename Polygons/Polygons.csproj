@@ -54,8 +54,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Renderer\ConvexHullDefinition.cs" />
-    <Compile Include="Src\Renderer\ConvexHullJarvis.cs" />
+    <Compile Include="Src\ConvexHull\Definition.cs" />
+    <Compile Include="Src\ConvexHull\IConvexHull.cs" />
+    <Compile Include="Src\ConvexHull\Jarvis.cs" />
     <Compile Include="Src\Renderer\Renderer.cs" />
     <Compile Include="Src\Shape\Shape.cs" />
     <Compile Include="Src\Shape\Types\Circle.cs" />
