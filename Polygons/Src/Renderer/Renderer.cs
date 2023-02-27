@@ -3,12 +3,13 @@ using System.Drawing;
 
 namespace Polygons
 {
-    public class Renderer
+    public sealed class Renderer
     {
-        public List<Shape.Shape> _shapes;
+        public readonly List<Shape.Shape> _shapes;
         public List<Shape.Shape> _used = new List<Shape.Shape>();
-        private IConvexHull _jarvis;
-        private IConvexHull _definition;
+        private readonly IConvexHull _jarvis;
+        private readonly IConvexHull _definition;
+        private DrawAlgorithm algorithm;
         public Graphics _graphics;
         private bool isDragging;
         private Vertex selected;
@@ -55,7 +56,7 @@ namespace Polygons
                 shape.Draw(_graphics);
             }
             if (_shapes.Count < 2) return;
-            _used = Jarvis.Draw(this);
+            _used = _jarvis.Draw();
             
         }
 

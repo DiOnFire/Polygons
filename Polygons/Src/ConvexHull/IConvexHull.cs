@@ -4,6 +4,6 @@ namespace Polygons
 {
     interface IConvexHull
     {
-        List<Shape.Shape> Draw(Renderer renderer);
+        List<Shape.Shape> Draw();
     }
 }
