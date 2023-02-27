@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Polygons
+namespace Polygons.ConvexHull
 {
     sealed class Jarvis : IConvexHull
     {

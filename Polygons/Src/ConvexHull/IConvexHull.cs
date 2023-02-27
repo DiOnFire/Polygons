@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Polygons
+namespace Polygons.ConvexHull
 {
     interface IConvexHull
     {

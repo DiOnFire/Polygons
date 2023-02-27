@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Polygons.Src.Benchmark
+namespace Polygons.Benchmark
 {
-    class JarvisBenchmark
+    sealed class JarvisBenchmark : IBenchmark 
     {
+        public long CalculateAfterElements(int count)
+        {
+            List<Shape.Shape> shapes = ShapeGenerator.GenerateShapes(count);
+            long startTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            return 0;
+        }
+
+        
     }
 }
