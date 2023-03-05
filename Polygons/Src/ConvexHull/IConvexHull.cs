@@ -2,8 +2,8 @@
 
 namespace Polygons.ConvexHull
 {
-    interface IConvexHull
+    public interface IConvexHull
     {
-        List<Shape.Shape> Draw();
+        List<Shape.Shape> Draw(bool shouldRender = true);
     }
 }

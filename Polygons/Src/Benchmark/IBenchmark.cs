@@ -1,6 +1,6 @@
 ﻿namespace Polygons.Benchmark
 {
-    interface IBenchmark
+    public interface IBenchmark
     {
         long CalculateAfterElements(int count); 
     }

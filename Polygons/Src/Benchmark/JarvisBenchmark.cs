@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Polygons.ConvexHull;
+using Polygons.Shape;
+using System;
 using System.Collections.Generic;
 
 namespace Polygons.Benchmark
@@ -7,12 +9,17 @@ namespace Polygons.Benchmark
     {
         public long CalculateAfterElements(int count)
         {
+            Console.WriteLine("Started jarvis benchmark...");
             List<Shape.Shape> shapes = ShapeGenerator.GenerateShapes(count);
-            long startTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
-            return 0;
+            Console.WriteLine("Shapes were generated...");
+            long startTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            ShapeManager manager = new ShapeManager(shapes);
+            Jarvis jarvis = new Jarvis(null, manager);
+            jarvis.Draw(false);
+            long endTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            Console.WriteLine($"Finished after {endTime - startTime} ms");
+            manager.Clear();
+            return endTime - startTime;
         }
-
-        
     }
 }

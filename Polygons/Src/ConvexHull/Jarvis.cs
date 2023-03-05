@@ -1,22 +1,40 @@
-﻿using System;
+﻿using Polygons.Shape;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
 namespace Polygons.ConvexHull
 {
-    sealed class Jarvis : IConvexHull
+    public sealed class Jarvis : IConvexHull
     {
         private readonly Pen _pen;
         private Renderer _renderer;
+        private ShapeManager _manager;
 
-        public Jarvis(Renderer renderer)
+        private ShapeManager ShapeManager
+        {
+            get { return _manager; }
+        }
+
+        private Renderer Renderer
+        {
+            get { return _renderer; }
+        }
+
+        private Pen Pen
+        {
+            get { return _pen; }
+        }
+
+        public Jarvis(Renderer renderer, ShapeManager manager)
         {
             this._pen = new Pen(new SolidBrush(Color.Blue));
             this._renderer = renderer;
+            this._manager = manager;
         }
 
         private double CalculateCos(
-            Shape.Shape vectorStart, 
+            Shape.Shape vectorStart,
             Shape.Shape vectorEnd,
             Shape.Shape potentialPoint)
         {
@@ -36,26 +54,26 @@ namespace Polygons.ConvexHull
             return cos;
         }
 
-        public List<Shape.Shape> Draw()
+        public List<Shape.Shape> Draw(bool shouldRender = true)
         {
             // Ищем первую точку (индекс в листе точек)
-            int firstPoint = FindFirstPoint(_renderer._shapes);
+            int firstPoint = FindFirstPoint(ShapeManager.Shapes);
             int currentPoint = firstPoint;
             int newPoint = 0, previousPoint;
 
             List<Shape.Shape> used = new List<Shape.Shape>();
-           
+
 
             // Для того, чтобы сгенерировать первый вектор, юзаем точку с кордами как у первой, но х будет далеко (-100)
-            int vectorX = -100 - _renderer._shapes[firstPoint].X;
+            int vectorX = -100 - ShapeManager.Shapes[firstPoint].X;
             int vectorY = 0; // Точки имеют один у
 
             double cos = double.MaxValue;
-            for (int i = 0; i < _renderer._shapes.Count; i++)
+            for (int i = 0; i < ShapeManager.Shapes.Count; i++)
             {
                 if (i == firstPoint) continue;
-                int potentialVectorX = _renderer._shapes[i].X - _renderer._shapes[firstPoint].X;
-                int potentialVectorY = _renderer._shapes[i].Y - _renderer._shapes[firstPoint].Y;
+                int potentialVectorX = ShapeManager.Shapes[i].X - ShapeManager.Shapes[firstPoint].X;
+                int potentialVectorY = ShapeManager.Shapes[i].Y - ShapeManager.Shapes[firstPoint].Y;
 
                 double potentialCos =
                     (vectorX * potentialVectorX + vectorY * potentialVectorY)
@@ -73,25 +91,29 @@ namespace Polygons.ConvexHull
                 }
             }
 
-            _renderer._graphics.DrawLine(
-                _pen,
-                _renderer._shapes[currentPoint].X + Shape.Shape._radius / 2,
-                _renderer._shapes[currentPoint].Y + Shape.Shape._radius / 2,
-                _renderer._shapes[newPoint].X + Shape.Shape._radius / 2,
-                _renderer._shapes[newPoint].Y + Shape.Shape._radius / 2
+            if (shouldRender)
+            {
+                Renderer.Graphics.DrawLine(
+                Pen,
+                ShapeManager.Shapes[currentPoint].X + Shape.Shape._radius / 2,
+                ShapeManager.Shapes[currentPoint].Y + Shape.Shape._radius / 2,
+                ShapeManager.Shapes[newPoint].X + Shape.Shape._radius / 2,
+                ShapeManager.Shapes[newPoint].Y + Shape.Shape._radius / 2
             );
+            }
 
-            
+
+
             currentPoint = newPoint;
             previousPoint = firstPoint;
 
-            used.Add(_renderer._shapes[currentPoint]);
-            used.Add(_renderer._shapes[previousPoint]);
+            used.Add(ShapeManager.Shapes[currentPoint]);
+            used.Add(ShapeManager.Shapes[previousPoint]);
 
 
             // ostalnije tochki
 
-            if (_renderer._shapes.Count < 3)
+            if (ShapeManager.Shapes.Count < 3)
             {
                 return used;
             }
@@ -100,13 +122,13 @@ namespace Polygons.ConvexHull
             {
                 cos = double.MaxValue;
                 int potential = 0;
-                for (int i = 0; i < _renderer._shapes.Count; i++)
+                for (int i = 0; i < ShapeManager.Shapes.Count; i++)
                 {
-                    Shape.Shape previous = _renderer._shapes[previousPoint];
-                    Shape.Shape current = _renderer._shapes[currentPoint];
-                    
-                    
-                    double potentialCos = CalculateCos(previous, current, _renderer._shapes[i]);
+                    Shape.Shape previous = ShapeManager.Shapes[previousPoint];
+                    Shape.Shape current = ShapeManager.Shapes[currentPoint];
+
+
+                    double potentialCos = CalculateCos(previous, current, ShapeManager.Shapes[i]);
 
                     if (potentialCos < cos)
                     {
@@ -114,17 +136,23 @@ namespace Polygons.ConvexHull
                         cos = potentialCos;
                     }
                 }
-                _renderer._graphics.DrawLine(
-                    _pen,
-                    _renderer._shapes[currentPoint].X + Shape.Shape._radius / 2,
-                    _renderer._shapes[currentPoint].Y + Shape.Shape._radius / 2,
-                    _renderer._shapes[potential].X + Shape.Shape._radius / 2,
-                    _renderer._shapes[potential].Y  + Shape.Shape._radius / 2
+
+                if (shouldRender)
+                {
+                    Renderer.Graphics.DrawLine(
+                    Pen,
+                    ShapeManager.Shapes[currentPoint].X + Shape.Shape._radius / 2,
+                    ShapeManager.Shapes[currentPoint].Y + Shape.Shape._radius / 2,
+                    ShapeManager.Shapes[potential].X + Shape.Shape._radius / 2,
+                    ShapeManager.Shapes[potential].Y + Shape.Shape._radius / 2
                 );
+
+                }
+
 
                 previousPoint = currentPoint;
                 currentPoint = potential;
-                used.Add(_renderer._shapes[currentPoint]);
+                used.Add(ShapeManager.Shapes[currentPoint]);
 
             } while (currentPoint != firstPoint);
 

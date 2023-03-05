@@ -34,13 +34,16 @@
             this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.squareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.triangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.benchmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runTestBenchmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.benchmarkToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1211, 24);
@@ -52,7 +55,7 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.shapeToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(50, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(51, 20);
             this.toolStripMenuItem1.Text = "Vertex";
             // 
             // shapeToolStripMenuItem
@@ -63,14 +66,14 @@
             this.squareToolStripMenuItem,
             this.triangleToolStripMenuItem});
             this.shapeToolStripMenuItem.Name = "shapeToolStripMenuItem";
-            this.shapeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.shapeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.shapeToolStripMenuItem.Text = "Shape";
             // 
             // circleToolStripMenuItem
             // 
             this.circleToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
-            this.circleToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.circleToolStripMenuItem.Text = "Circle";
             this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
             // 
@@ -78,7 +81,7 @@
             // 
             this.squareToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.squareToolStripMenuItem.Name = "squareToolStripMenuItem";
-            this.squareToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.squareToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.squareToolStripMenuItem.Text = "Square";
             this.squareToolStripMenuItem.Click += new System.EventHandler(this.squareToolStripMenuItem_Click);
             // 
@@ -86,9 +89,24 @@
             // 
             this.triangleToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.triangleToolStripMenuItem.Name = "triangleToolStripMenuItem";
-            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.triangleToolStripMenuItem.Text = "Triangle";
             this.triangleToolStripMenuItem.Click += new System.EventHandler(this.triangleToolStripMenuItem_Click);
+            // 
+            // benchmarkToolStripMenuItem
+            // 
+            this.benchmarkToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runTestBenchmarkToolStripMenuItem});
+            this.benchmarkToolStripMenuItem.Name = "benchmarkToolStripMenuItem";
+            this.benchmarkToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.benchmarkToolStripMenuItem.Text = "Benchmark";
+            // 
+            // runTestBenchmarkToolStripMenuItem
+            // 
+            this.runTestBenchmarkToolStripMenuItem.Name = "runTestBenchmarkToolStripMenuItem";
+            this.runTestBenchmarkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.runTestBenchmarkToolStripMenuItem.Text = "Run test benchmark";
+            this.runTestBenchmarkToolStripMenuItem.Click += new System.EventHandler(this.runTestBenchmarkToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -119,6 +137,8 @@
         private System.Windows.Forms.ToolStripMenuItem circleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem squareToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem triangleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem benchmarkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runTestBenchmarkToolStripMenuItem;
     }
 }
 

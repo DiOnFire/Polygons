@@ -1,4 +1,6 @@
-﻿using Polygons.Shape;
+﻿using Polygons.Benchmark;
+using Polygons.Shape;
+using Polygons.ConvexHull;
 using System;
 using System.Windows.Forms;
 
@@ -30,13 +32,13 @@ namespace Polygons
         {
             switch (buffer.SelectedVertex)
             {
-                case Renderer.Vertex.CIRCLE:
+                case VertexType.CIRCLE:
                     buffer.AddShape(new Circle(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2));
                     break;
-                case Renderer.Vertex.SQUARE:
+                case VertexType.SQUARE:
                     buffer.AddShape(new Square(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2));
                     break;
-                case Renderer.Vertex.TRIANGLE:
+                case VertexType.TRIANGLE:
                     buffer.AddShape(new Triangle(x, y));
                     break;
             }
@@ -80,17 +82,32 @@ namespace Polygons
 
         private void circleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            buffer.SelectedVertex = Renderer.Vertex.CIRCLE;
+            buffer.SelectedVertex = VertexType.CIRCLE;
         }
 
         private void squareToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            buffer.SelectedVertex = Renderer.Vertex.SQUARE;
+            buffer.SelectedVertex = VertexType.SQUARE;
         }
 
         private void triangleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            buffer.SelectedVertex = Renderer.Vertex.TRIANGLE;
+            buffer.SelectedVertex = VertexType.TRIANGLE;
+        }
+
+        private void runTestBenchmarkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DefinitionBenchmark definitionBenchmark = new DefinitionBenchmark();
+            JarvisBenchmark jarvisBenchmark = new JarvisBenchmark();
+
+            Benchmark.Benchmark benchmark = new Benchmark.Benchmark();
+            BenchmarkStorage storage = new BenchmarkStorage();
+
+            storage.AddBenchmarkResult(Algorithm.DEFINITION, benchmark.RunBenchmark(definitionBenchmark));
+            storage.AddBenchmarkResult(Algorithm.JARVIS, benchmark.RunBenchmark(jarvisBenchmark));
+
+            BenchmarkForm form = new BenchmarkForm(storage);
+            form.Show();
         }
     }
 }

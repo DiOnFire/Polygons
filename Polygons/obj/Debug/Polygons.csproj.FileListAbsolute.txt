@@ -19,3 +19,4 @@ C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.csproj.Gener
 C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.csproj.CoreCompileInputs.cache
 C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.exe
 C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.pdb
+C:\Users\DiOnFire\source\repos\Polygons\Polygons\obj\Debug\Polygons.BenchmarkForm.resources

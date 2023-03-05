@@ -1,4 +1,5 @@
 ﻿using Polygons.ConvexHull;
+using Polygons.Shape;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -6,29 +7,18 @@ namespace Polygons
 {
     public sealed class Renderer
     {
-        public readonly List<Shape.Shape> _shapes;
+        #region fields
         public List<Shape.Shape> _used = new List<Shape.Shape>();
         private readonly IConvexHull _jarvis;
         private readonly IConvexHull _definition;
-        private DrawAlgorithm algorithm;
+        private Algorithm algorithm;
         public Graphics _graphics;
         private bool isDragging;
-        private Vertex selected;
+        private VertexType selected;
+        private readonly ShapeManager _manager;
+        #endregion
 
-        public enum Vertex
-        {
-            CIRCLE,
-            TRIANGLE,
-            SQUARE
-        }
-
-        public enum DrawAlgorithm
-        {
-            JARVIS,
-            DEFENITION
-        }
-
-        public Vertex SelectedVertex
+        public VertexType SelectedVertex
         {
             get { return selected; }
             set { selected = value; }
@@ -39,47 +29,62 @@ namespace Polygons
         public Graphics Graphics
         {
             set { _graphics = value; }
+            get { return _graphics; }
+        }
+
+        public ShapeManager ShapeManager
+        {
+            get { return _manager; }
+        }
+
+        public IConvexHull JarvisRenderer
+        {
+            get { return _jarvis; }
+        }
+
+        public IConvexHull DefinitionRenderer
+        {
+            get { return _definition; }
         }
 
         public Renderer(Graphics g)
         {
+            _manager = new ShapeManager();
             _graphics = g;
-            _shapes = new List<Shape.Shape>();
-            _jarvis = new Jarvis(this);
-            _definition = new Definition(this);
+            _jarvis = new Jarvis(this, _manager);
+            _definition = new Definition(this, _manager);
         }
 
         public void ReRender()
         {
             
-            foreach (Shape.Shape shape in _shapes)
+            foreach (Shape.Shape shape in ShapeManager.Shapes)
             {
-                shape.Draw(_graphics);
+                shape.Draw(Graphics);
             }
-            if (_shapes.Count < 2) return;
-            _used = _jarvis.Draw();
+            if (ShapeManager.Shapes.Count < 2) return;
+            _used = JarvisRenderer.Draw();
             
         }
 
         public void RenderShape(Shape.Shape shape)
         {
             ReRender();
-            shape.Draw(_graphics);
+            shape.Draw(Graphics);
         }
 
         public void AddShape(Shape.Shape shape)
         {
-            _shapes.Add(shape);
-            
+            ShapeManager.AddShape(shape);
         }
 
         public void RemoveShape(int x, int y)
         {
             if (isDragging) return;
-            foreach (Shape.Shape shape in _shapes)
+            foreach (Shape.Shape shape in ShapeManager.Shapes)
             {
                 if (shape.IsInside(x, y)) {
-                    _shapes.Remove(shape);
+                    ShapeManager.RemoveShape(shape);
                     return;
                 }
             }
@@ -87,7 +92,7 @@ namespace Polygons
 
         public void StopDragging()
         {
-            foreach (Shape.Shape shape in _shapes)
+            foreach (Shape.Shape shape in ShapeManager.Shapes)
             {
                 shape.IsDragging = false;
             }
@@ -98,7 +103,7 @@ namespace Polygons
 
         public void Drag(int x, int y)
         {
-            foreach (Shape.Shape shape in _shapes)
+            foreach (Shape.Shape shape in ShapeManager.Shapes)
             {
                 if (shape.IsDragging)
                 {
@@ -113,7 +118,7 @@ namespace Polygons
 
         public void TryDrag(int x, int y)
         {
-            foreach (Shape.Shape shape in _shapes)
+            foreach (Shape.Shape shape in ShapeManager.Shapes)
             {
                 if (shape.IsInside(x, y))
                 {
@@ -127,19 +132,19 @@ namespace Polygons
 
         public void ClearGarbage(List<Shape.Shape> used)
         {
-            if (_shapes.Count < 3) return;
+            if (ShapeManager.Shapes.Count < 3) return;
             List<Shape.Shape> garbage = new List<Shape.Shape>();
-            for (int i = 0; i < _shapes.Count; i++)
+            for (int i = 0; i < ShapeManager.Shapes.Count; i++)
             {
-                if (!used.Contains(_shapes[i]))
+                if (!used.Contains(ShapeManager.Shapes[i]))
                 {
-                    garbage.Add(_shapes[i]);
+                    garbage.Add(ShapeManager.Shapes[i]);
                 }
             }
 
             foreach (Shape.Shape item in garbage)
             {
-                _shapes.Remove(item);
+                ShapeManager.RemoveShape(item);
             }
         }
     }
