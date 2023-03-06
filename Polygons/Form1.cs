@@ -101,10 +101,11 @@ namespace Polygons
             JarvisBenchmark jarvisBenchmark = new JarvisBenchmark();
 
             Benchmark.Benchmark benchmark = new Benchmark.Benchmark();
+            Benchmark.Benchmark jBenchmark = new Benchmark.Benchmark(new int[] { 10000, 20000, 50000, 100000, 200000 });
             BenchmarkStorage storage = new BenchmarkStorage();
 
             storage.AddBenchmarkResult(Algorithm.DEFINITION, benchmark.RunBenchmark(definitionBenchmark));
-            storage.AddBenchmarkResult(Algorithm.JARVIS, benchmark.RunBenchmark(jarvisBenchmark));
+            storage.AddBenchmarkResult(Algorithm.JARVIS, jBenchmark.RunBenchmark(jarvisBenchmark));
 
             BenchmarkForm form = new BenchmarkForm(storage);
             form.Show();

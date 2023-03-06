@@ -65,7 +65,7 @@
             this.ClientSize = new System.Drawing.Size(651, 527);
             this.Controls.Add(this.benchmarkResultsChart);
             this.Name = "BenchmarkForm";
-            this.Text = "BenchmarkForm";
+            this.Text = "Benchmark result";
             ((System.ComponentModel.ISupportInitialize)(this.benchmarkResultsChart)).EndInit();
             this.ResumeLayout(false);
 

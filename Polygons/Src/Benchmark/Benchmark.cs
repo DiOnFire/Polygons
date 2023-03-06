@@ -4,16 +4,21 @@ namespace Polygons.Benchmark
 {
     public class Benchmark
     {
-        private readonly short[] DELAYS;
+        private readonly int[] DELAYS;
 
         public Benchmark()
         {
-            DELAYS = new short[] { 10, 20, 50, 100, 200, 300, 400, 500 };
+            DELAYS = new int[] { 10, 20, 50, 100, 200, 300, 400, 500 };
         }
 
-        public Dictionary<short, long> RunBenchmark(IBenchmark tool)
+        public Benchmark(int[] delays)
         {
-            Dictionary<short, long> results = new Dictionary<short, long>();
+            DELAYS = delays;
+        }
+
+        public Dictionary<int, long> RunBenchmark(IBenchmark tool)
+        {
+            Dictionary<int, long> results = new Dictionary<int, long>();
             for (int i = 0; i < DELAYS.Length; i++)
             {
                 long res = tool.CalculateAfterElements(DELAYS[i]);

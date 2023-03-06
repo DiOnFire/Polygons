@@ -23,9 +23,9 @@ namespace Polygons
 
         private void RenderChart()
         {
-            foreach (KeyValuePair<Algorithm, Dictionary<short, long>> entry in Storage.Storage)
+            foreach (KeyValuePair<Algorithm, Dictionary<int, long>> entry in Storage.Storage)
             {
-                foreach (KeyValuePair<short, long> test in entry.Value)
+                foreach (KeyValuePair<int, long> test in entry.Value)
                 {
                     benchmarkResultsChart.Series[entry.Key.ToString()].Points.AddXY(test.Key, test.Value);
                 }
