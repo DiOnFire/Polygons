@@ -56,8 +56,7 @@ namespace Polygons
         }
 
         public void ReRender()
-        {
-            
+        {   
             foreach (Shape.Shape shape in ShapeManager.Shapes)
             {
                 shape.Draw(Graphics);

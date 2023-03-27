@@ -104,12 +104,14 @@
     <Compile Include="Src\IO\Serialization\ShapeDeserializer.cs" />
     <Compile Include="Src\IO\Serialization\ShapeSerializer.cs" />
     <Compile Include="Src\Renderer\Renderer.cs" />
+    <Compile Include="Src\Shape\DynamicUtil.cs" />
     <Compile Include="Src\Shape\Shape.cs" />
     <Compile Include="Src\Shape\ShapeManager.cs" />
     <Compile Include="Src\Shape\Types\Circle.cs" />
     <Compile Include="Src\Shape\Types\Square.cs" />
     <Compile Include="Src\Shape\Types\Triangle.cs" />
     <Compile Include="Src\Shape\VertexType.cs" />
+    <Compile Include="Src\Util\TimerUtil.cs" />
     <EmbeddedResource Include="BenchmarkForm.resx">
       <DependentUpon>BenchmarkForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -3,23 +3,27 @@ using Polygons.Shape;
 using Polygons.ConvexHull;
 using System;
 using System.Windows.Forms;
+using Polygons.Util;
 
 namespace Polygons
 {
     public partial class Form1 : Form
     {
         private Renderer buffer;
+        private TimerUtil timer;
 
         public Form1()
         {
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+            DoubleBuffered = true;
             UpdateStyles();
         }
 
         private void OnFormLoad(object sender, EventArgs e)
         {
             buffer = new Renderer(CreateGraphics());
+            timer = new TimerUtil(buffer, this);
         }
 
         private void ReRender()
@@ -77,6 +81,7 @@ namespace Polygons
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
+            buffer.Graphics = e.Graphics;
             buffer.ReRender();
         }
 
@@ -109,6 +114,18 @@ namespace Polygons
 
             BenchmarkForm form = new BenchmarkForm(storage);
             form.Show();
+        }
+
+        private void dynamicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dynamicToolStripMenuItem.Checked)
+            {
+            
+                timer.Setup();
+            } else
+            {
+                timer.Stop();
+            }
         }
     }
 }

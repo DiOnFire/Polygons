@@ -32,5 +32,21 @@ namespace Polygons.Shape
         {
             _shapes.Clear();
         }
+
+        public void SaveShapesState()
+        {
+            foreach (Shape shape in Shapes)
+            {
+                shape.SaveState();
+            }
+        }
+
+        public void RestoreState()
+        {
+            foreach (Shape shape in Shapes)
+            {
+                shape.Restore();
+            }
+        }
     }
 }
