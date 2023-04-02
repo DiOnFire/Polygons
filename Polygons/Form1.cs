@@ -4,6 +4,9 @@ using Polygons.ConvexHull;
 using System;
 using System.Windows.Forms;
 using Polygons.Util;
+using System.IO;
+using System.Collections.Generic;
+using Polygons.IO;
 
 namespace Polygons
 {
@@ -11,6 +14,7 @@ namespace Polygons
     {
         private Renderer buffer;
         private TimerUtil timer;
+        private string filePath = "";
 
         public Form1()
         {
@@ -81,7 +85,6 @@ namespace Polygons
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-            buffer.Graphics = e.Graphics;
             buffer.ReRender();
         }
 
@@ -126,6 +129,53 @@ namespace Polygons
             {
                 timer.Stop();
             }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                string file = openFileDialog1.FileName;
+                try
+                {
+                    filePath = file;
+                    string text = File.ReadAllText(file);
+                    List<Shape.Shape> shapes = ShapeDeserializer.Deserialize(text);
+
+                }
+                catch (IOException)
+                {
+                }
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string file = saveFileDialog.FileName;
+                File.WriteAllText(file, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
+            }
+            
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (filePath == "")
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = saveFileDialog.FileName;
+                    return;
+                }
+                    
+
+            }
+            File.WriteAllText(filePath, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
         }
     }
 }

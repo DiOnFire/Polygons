@@ -15,7 +15,7 @@ namespace Polygons
         public Graphics _graphics;
         private bool isDragging;
         private VertexType selected;
-        private readonly ShapeManager _manager;
+        private ShapeManager _manager;
         #endregion
 
         public VertexType SelectedVertex
@@ -55,6 +55,12 @@ namespace Polygons
             _definition = new Definition(this, _manager);
         }
 
+        public void ReSetup(List<Shape.Shape> shapes)
+        {
+            _manager = new ShapeManager(shapes);
+            ReRender();
+        }
+
         public void ReRender()
         {   
             foreach (Shape.Shape shape in ShapeManager.Shapes)
@@ -63,7 +69,6 @@ namespace Polygons
             }
             if (ShapeManager.Shapes.Count < 2) return;
             _used = JarvisRenderer.Draw();
-            
         }
 
         public void RenderShape(Shape.Shape shape)

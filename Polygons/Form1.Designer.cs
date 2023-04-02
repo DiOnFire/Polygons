@@ -39,9 +39,9 @@
             this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.squareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.triangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dynamicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.benchmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runTestBenchmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dynamicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,25 +71,28 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open...";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save as...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -97,7 +100,7 @@
             this.shapeToolStripMenuItem,
             this.dynamicToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(50, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(51, 20);
             this.toolStripMenuItem1.Text = "Vertex";
             // 
             // shapeToolStripMenuItem
@@ -108,14 +111,14 @@
             this.squareToolStripMenuItem,
             this.triangleToolStripMenuItem});
             this.shapeToolStripMenuItem.Name = "shapeToolStripMenuItem";
-            this.shapeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.shapeToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.shapeToolStripMenuItem.Text = "Shape";
             // 
             // circleToolStripMenuItem
             // 
             this.circleToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.circleToolStripMenuItem.Name = "circleToolStripMenuItem";
-            this.circleToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.circleToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.circleToolStripMenuItem.Text = "Circle";
             this.circleToolStripMenuItem.Click += new System.EventHandler(this.circleToolStripMenuItem_Click);
             // 
@@ -123,7 +126,7 @@
             // 
             this.squareToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.squareToolStripMenuItem.Name = "squareToolStripMenuItem";
-            this.squareToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.squareToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.squareToolStripMenuItem.Text = "Square";
             this.squareToolStripMenuItem.Click += new System.EventHandler(this.squareToolStripMenuItem_Click);
             // 
@@ -131,9 +134,17 @@
             // 
             this.triangleToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.triangleToolStripMenuItem.Name = "triangleToolStripMenuItem";
-            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.triangleToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.triangleToolStripMenuItem.Text = "Triangle";
             this.triangleToolStripMenuItem.Click += new System.EventHandler(this.triangleToolStripMenuItem_Click);
+            // 
+            // dynamicToolStripMenuItem
+            // 
+            this.dynamicToolStripMenuItem.CheckOnClick = true;
+            this.dynamicToolStripMenuItem.Name = "dynamicToolStripMenuItem";
+            this.dynamicToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.dynamicToolStripMenuItem.Text = "Dynamic";
+            this.dynamicToolStripMenuItem.Click += new System.EventHandler(this.dynamicToolStripMenuItem_Click);
             // 
             // benchmarkToolStripMenuItem
             // 
@@ -149,14 +160,6 @@
             this.runTestBenchmarkToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.runTestBenchmarkToolStripMenuItem.Text = "Run benchmark...";
             this.runTestBenchmarkToolStripMenuItem.Click += new System.EventHandler(this.runTestBenchmarkToolStripMenuItem_Click);
-            // 
-            // dynamicToolStripMenuItem
-            // 
-            this.dynamicToolStripMenuItem.CheckOnClick = true;
-            this.dynamicToolStripMenuItem.Name = "dynamicToolStripMenuItem";
-            this.dynamicToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.dynamicToolStripMenuItem.Text = "Dynamic";
-            this.dynamicToolStripMenuItem.Click += new System.EventHandler(this.dynamicToolStripMenuItem_Click);
             // 
             // Form1
             // 

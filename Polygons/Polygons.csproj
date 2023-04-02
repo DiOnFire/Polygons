@@ -99,8 +99,6 @@
     <Compile Include="Src\ConvexHull\Definition.cs" />
     <Compile Include="Src\ConvexHull\IConvexHull.cs" />
     <Compile Include="Src\ConvexHull\Jarvis.cs" />
-    <Compile Include="Src\IO\FileReader.cs" />
-    <Compile Include="Src\IO\FileWriter.cs" />
     <Compile Include="Src\IO\Serialization\ShapeDeserializer.cs" />
     <Compile Include="Src\IO\Serialization\ShapeSerializer.cs" />
     <Compile Include="Src\Renderer\Renderer.cs" />

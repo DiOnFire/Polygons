@@ -6,9 +6,9 @@ namespace Polygons.IO
 {
     public class ShapeSerializer
     {
-        public static void Serialize(FileStream stream, List<Shape.Shape> shapes)
+        public static string Serialize(List<Shape.Shape> shapes)
         {
-            JsonSerializer.Serialize(stream, shapes);
+            return JsonSerializer.Serialize(shapes);
         }
     }
 }
