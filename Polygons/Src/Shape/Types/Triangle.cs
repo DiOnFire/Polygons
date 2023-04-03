@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Polygons.Shape
 {
     public class Triangle : Shape
     {
-        public Triangle(int x, int y) : base(x, y) { }
+        public Triangle(int x, int y) : base(x, y, VertexType.TRIANGLE) { }
 
         public override void Draw(Graphics g)
         {
@@ -23,7 +18,12 @@ namespace Polygons.Shape
 
         public override bool IsInside(int x, int y)
         {
-            return false;
+            Point point1 = new Point(X - _radius / 2, Y + _radius / 2);
+            Point point2 = new Point(X, Y - _radius / 2);
+            Point point3 = new Point(X + _radius / 2, Y + _radius / 2);
+            return (point1.X - point3.X) * (y - point3.Y) > (point1.Y - point3.Y) * (x - point3.X) &&
+                (point2.X - point3.X) * (y - point3.Y) < (point2.Y - point3.Y) * (x - point3.X) &&
+                y < point1.Y;
         }
     }
 }

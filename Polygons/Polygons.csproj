@@ -103,6 +103,7 @@
     <Compile Include="Src\IO\Serialization\ShapeSerializer.cs" />
     <Compile Include="Src\Renderer\Renderer.cs" />
     <Compile Include="Src\Shape\DynamicUtil.cs" />
+    <Compile Include="Src\Shape\SerializableShape.cs" />
     <Compile Include="Src\Shape\Shape.cs" />
     <Compile Include="Src\Shape\ShapeManager.cs" />
     <Compile Include="Src\Shape\Types\Circle.cs" />

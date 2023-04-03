@@ -9,8 +9,8 @@ namespace Polygons
     {
         #region fields
         public List<Shape.Shape> _used = new List<Shape.Shape>();
-        private readonly IConvexHull _jarvis;
-        private readonly IConvexHull _definition;
+        private IConvexHull _jarvis;
+        private IConvexHull _definition;
         private Algorithm algorithm;
         public Graphics _graphics;
         private bool isDragging;
@@ -58,7 +58,8 @@ namespace Polygons
         public void ReSetup(List<Shape.Shape> shapes)
         {
             _manager = new ShapeManager(shapes);
-            ReRender();
+            _jarvis = new Jarvis(this, _manager);
+            _definition = new Definition(this, _manager);
         }
 
         public void ReRender()
@@ -111,8 +112,16 @@ namespace Polygons
             {
                 if (shape.IsDragging)
                 {
-                    shape.X = x - Shape.Shape._radius / 2;
-                    shape.Y = y - Shape.Shape._radius / 2;
+                    if (shape.Type != VertexType.TRIANGLE)
+                    {
+                        shape.X = x - Shape.Shape._radius / 2;
+                        shape.Y = y - Shape.Shape._radius / 2;
+                    } else
+                    {
+                        shape.X = x;
+                        shape.Y = y;
+                    }
+                    
                     ReRender();
                     break;
                 }

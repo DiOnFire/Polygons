@@ -142,8 +142,33 @@ namespace Polygons
                 {
                     filePath = file;
                     string text = File.ReadAllText(file);
-                    List<Shape.Shape> shapes = ShapeDeserializer.Deserialize(text);
-
+                    List<Shape.SerializableShape> shapes = ShapeDeserializer.Deserialize(text);
+                    if (shapes == null) { return; }
+                    List<Shape.Shape> newShapes = new List<Shape.Shape>();
+                    foreach (Shape.SerializableShape s in shapes)
+                    {
+                        switch (s.type)
+                        {
+                            case VertexType.CIRCLE:
+                                {
+                                    newShapes.Add(new Circle(s.x, s.y));
+                                    break;
+                                }
+                            case VertexType.SQUARE:
+                                {
+                                    newShapes.Add(new Square(s.x, s.y));
+                                    break;
+                                }
+                            case VertexType.TRIANGLE:
+                                {
+                                    newShapes.Add(new Triangle(s.x - Shape.Shape._radius / 2, s.y - Shape.Shape._radius / 2));
+                                    break;
+                                }
+                        }
+                       
+                    }
+                    buffer.ReSetup(newShapes);
+                    ReRender();
                 }
                 catch (IOException)
                 {
@@ -154,10 +179,11 @@ namespace Polygons
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON (*.json)|*.json";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string file = saveFileDialog.FileName;
-                File.WriteAllText(file, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
+                filePath = saveFileDialog.FileName;
+                File.WriteAllText(filePath, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
             }
             
         }
@@ -167,10 +193,12 @@ namespace Polygons
             if (filePath == "")
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
+                Stream myStream;
+                saveFileDialog.Filter = "JSON (*.json)|*.json";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     filePath = saveFileDialog.FileName;
-                    return;
+                
                 }
                     
 

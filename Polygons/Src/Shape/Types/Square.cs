@@ -4,7 +4,7 @@ namespace Polygons.Shape
 {
     public class Square : Shape
     {
-        public Square(int x, int y) : base(x, y) { }
+        public Square(int x, int y) : base(x, y, VertexType.SQUARE) { }
 
         public override void Draw(Graphics g)
         {

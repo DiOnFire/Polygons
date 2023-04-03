@@ -7,23 +7,25 @@ namespace Polygons.Shape
     {
         private int _x;
         private int _y;
+        private VertexType _vertexType;
         private int _oldX;
         private int _oldY;
         private bool _dragging;
         public static int _radius = 50;
 
-        protected Shape()
+        public Shape()
         {
             this._x = 0;
             this._y = 0;
             this._dragging = false;
         }
 
-        protected Shape(int x, int y)
+        protected Shape(int x, int y, VertexType type)
         {
             this._x = x;
             this._y = y;
             this._dragging = false;
+            this._vertexType = type;
         }
 
         public int OldX
@@ -49,9 +51,14 @@ namespace Polygons.Shape
         }
 
         public bool IsDragging
-        { 
+        {
             get { return _dragging; }
             set { _dragging = value; }
+        }
+
+        public VertexType Type
+        {
+            get { return _vertexType; }
         }
 
         public abstract void Draw(Graphics g);

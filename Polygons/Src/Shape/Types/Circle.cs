@@ -9,7 +9,7 @@ namespace Polygons.Shape
 {
     public class Circle : Shape
     {
-        public Circle(int x, int y) : base(x - _radius / 16, y - _radius / 16)
+        public Circle(int x, int y) : base(x - _radius / 16, y - _radius / 16, VertexType.CIRCLE)
         {
             
         }
