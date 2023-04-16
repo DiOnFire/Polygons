@@ -15,6 +15,7 @@ namespace Polygons
         private Renderer buffer;
         private TimerUtil timer;
         private string filePath = "";
+        private bool isChanged = false;
 
         public Form1()
         {
@@ -32,6 +33,7 @@ namespace Polygons
 
         private void ReRender()
         {
+            isChanged = true;
             Refresh();
             buffer.ReRender();
         }
@@ -143,7 +145,10 @@ namespace Polygons
                     filePath = file;
                     string text = File.ReadAllText(file);
                     List<Shape.SerializableShape> shapes = ShapeDeserializer.Deserialize(text);
-                    if (shapes == null) { return; }
+                    if (shapes == null) {
+                        filePath = "";
+                        return; 
+                    }
                     List<Shape.Shape> newShapes = new List<Shape.Shape>();
                     foreach (Shape.SerializableShape s in shapes)
                     {
@@ -172,7 +177,9 @@ namespace Polygons
                 }
                 catch (IOException)
                 {
+                    MessageBox.Show("Файл повреждён или содержит ошибки.", "Ошибка открытия", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                isChanged = false;
             }
         }
 
@@ -185,10 +192,9 @@ namespace Polygons
                 filePath = saveFileDialog.FileName;
                 File.WriteAllText(filePath, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
             }
-            
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        public void Save()
         {
             if (filePath == "")
             {
@@ -198,12 +204,57 @@ namespace Polygons
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     filePath = saveFileDialog.FileName;
-                
+                    File.WriteAllText(filePath, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
+                    isChanged = false;
                 }
-                    
-
+            } else
+            {
+                File.WriteAllText(filePath, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
+                isChanged = false;
             }
-            File.WriteAllText(filePath, ShapeSerializer.Serialize(buffer.ShapeManager.Shapes));
+          
+            
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        public void Check()
+        {
+            if ((filePath == "" && buffer.ShapeManager.Shapes.Count > 0) || isChanged)
+            {
+                DialogResult res = MessageBox.Show("Есть не сохранённые изменения. Сохранить?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (res == DialogResult.OK)
+                {
+                    Save();
+                }
+                if (res == DialogResult.Cancel)
+                {
+                    buffer = new Renderer(CreateGraphics());
+                    filePath = "";
+                    ReRender();
+                    isChanged = false;
+                }
+            }
+            else
+            {
+                buffer = new Renderer(CreateGraphics());
+                filePath = "";
+                ReRender();
+                isChanged = false;
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Check();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Check();
         }
     }
 }

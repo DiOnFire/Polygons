@@ -95,10 +95,10 @@ namespace Polygons.ConvexHull
             {
                 Renderer.Graphics.DrawLine(
                 Pen,
-                ShapeManager.Shapes[currentPoint].X + Shape.Shape._radius / 2,
-                ShapeManager.Shapes[currentPoint].Y + Shape.Shape._radius / 2,
-                ShapeManager.Shapes[newPoint].X + Shape.Shape._radius / 2,
-                ShapeManager.Shapes[newPoint].Y + Shape.Shape._radius / 2
+                ShapeManager.Shapes[currentPoint].X + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 0 : Shape.Shape._radius / 2),
+                ShapeManager.Shapes[currentPoint].Y + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 3 : Shape.Shape._radius / 2),
+                ShapeManager.Shapes[newPoint].X + (ShapeManager.Shapes[newPoint].Type == VertexType.TRIANGLE ? 0 : Shape.Shape._radius / 2),
+                ShapeManager.Shapes[newPoint].Y + (ShapeManager.Shapes[newPoint].Type == VertexType.TRIANGLE ? 3 : Shape.Shape._radius / 2)
             );
             }
 
@@ -141,10 +141,10 @@ namespace Polygons.ConvexHull
                 {
                     Renderer.Graphics.DrawLine(
                     Pen,
-                    ShapeManager.Shapes[currentPoint].X + Shape.Shape._radius / 2,
-                    ShapeManager.Shapes[currentPoint].Y + Shape.Shape._radius / 2,
-                    ShapeManager.Shapes[potential].X + Shape.Shape._radius / 2,
-                    ShapeManager.Shapes[potential].Y + Shape.Shape._radius / 2
+                    ShapeManager.Shapes[currentPoint].X + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 0 : Shape.Shape._radius / 2),
+                ShapeManager.Shapes[currentPoint].Y + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 3 : Shape.Shape._radius / 2),
+                    ShapeManager.Shapes[potential].X + (ShapeManager.Shapes[potential].Type == VertexType.TRIANGLE ? 0 : Shape.Shape._radius / 2),
+                ShapeManager.Shapes[potential].Y + (ShapeManager.Shapes[potential].Type == VertexType.TRIANGLE ? 3 : Shape.Shape._radius / 2)
                 );
 
                 }

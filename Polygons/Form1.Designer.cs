@@ -42,6 +42,7 @@
             this.dynamicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.benchmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runTestBenchmarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +61,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.openToolStripMenuItem,
             this.toolStripSeparator1,
             this.saveToolStripMenuItem,
@@ -161,6 +163,13 @@
             this.runTestBenchmarkToolStripMenuItem.Text = "Run benchmark...";
             this.runTestBenchmarkToolStripMenuItem.Click += new System.EventHandler(this.runTestBenchmarkToolStripMenuItem_Click);
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,6 +179,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Polygons";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.OnFormLoad);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
@@ -198,6 +208,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dynamicToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
     }
 }
 

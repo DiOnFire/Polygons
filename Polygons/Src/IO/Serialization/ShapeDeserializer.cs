@@ -14,7 +14,7 @@ namespace Polygons.IO
                 return JsonSerializer.Deserialize<List<Shape.SerializableShape>>(text);
             } catch (Exception e)
             {
-                MessageBox.Show("че-то с фалом не так...");
+                MessageBox.Show("Файл повреждён или содержит ошибки.", "Ошибка открытия", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return null;
         }
