@@ -33,7 +33,7 @@ namespace Polygons.ConvexHull
             this._manager = manager;
         }
 
-        public List<Shape.Shape> Draw(bool shouldRender = true)
+        public List<Shape.Shape> Draw(Graphics g = null, bool shouldRender = true)
         {
             List<Shape.Shape> points = new List<Shape.Shape>();
             for (int i = 0; i < ShapeManager.Shapes.Count; i++)
@@ -75,7 +75,7 @@ namespace Polygons.ConvexHull
                         
                         if (shouldRender)
                         {
-                            Renderer.Graphics.DrawLine(Pen, ShapeManager.Shapes[i].X + Shape.Shape._radius / 2, ShapeManager.Shapes[i].Y + Shape.Shape._radius / 2, ShapeManager.Shapes[j].X + Shape.Shape._radius / 2, ShapeManager.Shapes[j].Y + Shape.Shape._radius / 2);
+                            g.DrawLine(Pen, ShapeManager.Shapes[i].X + Shape.Shape._radius / 2, ShapeManager.Shapes[i].Y + Shape.Shape._radius / 2, ShapeManager.Shapes[j].X + Shape.Shape._radius / 2, ShapeManager.Shapes[j].Y + Shape.Shape._radius / 2);
                         }
                     }
                 }

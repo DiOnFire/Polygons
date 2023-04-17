@@ -1,5 +1,6 @@
 ﻿using Polygons.ConvexHull;
 using Polygons.Shape;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -26,12 +27,6 @@ namespace Polygons
 
         public bool IsDragging { get { return isDragging; } }
 
-        public Graphics Graphics
-        {
-            set { _graphics = value; }
-            get { return _graphics; }
-        }
-
         public ShapeManager ShapeManager
         {
             get { return _manager; }
@@ -47,10 +42,9 @@ namespace Polygons
             get { return _definition; }
         }
 
-        public Renderer(Graphics g)
+        public Renderer()
         {
             _manager = new ShapeManager();
-            _graphics = g;
             _jarvis = new Jarvis(this, _manager);
             _definition = new Definition(this, _manager);
         }
@@ -62,21 +56,17 @@ namespace Polygons
             _definition = new Definition(this, _manager);
         }
 
-        public void ReRender()
+        public void ReRender(Graphics g)
         {   
             foreach (Shape.Shape shape in ShapeManager.Shapes)
             {
-                shape.Draw(Graphics);
+                shape.Draw(g);
             }
-            if (ShapeManager.Shapes.Count < 2) return;
-            _used = JarvisRenderer.Draw();
+            if (ShapeManager.Shapes.Count <= 2) return;
+            _used = JarvisRenderer.Draw(g);
         }
 
-        public void RenderShape(Shape.Shape shape)
-        {
-            ReRender();
-            shape.Draw(Graphics);
-        }
+   
 
         public void AddShape(Shape.Shape shape)
         {
@@ -101,8 +91,7 @@ namespace Polygons
             {
                 shape.IsDragging = false;
             }
-            
-            ReRender();
+           
             isDragging = false;
         }
 
@@ -121,8 +110,7 @@ namespace Polygons
                         shape.X = x;
                         shape.Y = y;
                     }
-                    
-                    ReRender();
+                   
                     break;
                 }
             }
@@ -137,7 +125,6 @@ namespace Polygons
                 {
                     shape.IsDragging = true;
                     isDragging = true;
-                    ReRender();
                     break;
                 }
             }

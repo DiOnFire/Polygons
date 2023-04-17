@@ -22,7 +22,7 @@ namespace Polygons.Util
         {
             util.MoveRandom();
             form.Refresh();
-            renderer.ReRender();
+            
             renderer.ClearGarbage(renderer._used);
         }
 
@@ -42,8 +42,7 @@ namespace Polygons.Util
             myTimer.Stop();
             renderer.ShapeManager.RestoreState();
             form.Refresh();
-            renderer.ReRender();
-
+        
         }
     }
 }

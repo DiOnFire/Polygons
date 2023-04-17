@@ -21,13 +21,12 @@ namespace Polygons
         {
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
-            DoubleBuffered = true;
             UpdateStyles();
         }
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            buffer = new Renderer(CreateGraphics());
+            buffer = new Renderer();
             timer = new TimerUtil(buffer, this);
         }
 
@@ -35,7 +34,6 @@ namespace Polygons
         {
             isChanged = true;
             Refresh();
-            buffer.ReRender();
         }
 
         private void AddShape(int x, int y)
@@ -87,7 +85,7 @@ namespace Polygons
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-            buffer.ReRender();
+            buffer.ReRender(e.Graphics);
         }
 
         private void circleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -125,7 +123,6 @@ namespace Polygons
         {
             if (dynamicToolStripMenuItem.Checked)
             {
-            
                 timer.Setup();
             } else
             {
@@ -135,6 +132,15 @@ namespace Polygons
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if ((filePath == "" && buffer.ShapeManager.Shapes.Count > 0) || isChanged)
+            {
+                DialogResult res = MessageBox.Show("Есть не сохранённые изменения. Сохранить?", "Предупреждение", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (res == DialogResult.OK)
+                {
+                    Save();
+                    isChanged = false;
+                }
+            }
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
@@ -229,10 +235,11 @@ namespace Polygons
                 if (res == DialogResult.OK)
                 {
                     Save();
+                    isChanged = false;
                 }
                 if (res == DialogResult.Cancel)
                 {
-                    buffer = new Renderer(CreateGraphics());
+                    buffer = new Renderer();
                     filePath = "";
                     ReRender();
                     isChanged = false;
@@ -240,7 +247,7 @@ namespace Polygons
             }
             else
             {
-                buffer = new Renderer(CreateGraphics());
+                buffer = new Renderer();
                 filePath = "";
                 ReRender();
                 isChanged = false;

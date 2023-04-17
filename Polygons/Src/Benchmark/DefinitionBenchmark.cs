@@ -16,7 +16,7 @@ namespace Polygons.Benchmark
             long startTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             ShapeManager manager = new ShapeManager(shapes);
             Definition definition = new Definition(null, manager);
-            definition.Draw(false);
+            definition.Draw(null, false);
             Console.WriteLine("Ending definition benchmark...");
             long endTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             Console.WriteLine($"Finished after {endTime - startTime} ms");

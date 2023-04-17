@@ -15,7 +15,7 @@ namespace Polygons.Benchmark
             long startTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             ShapeManager manager = new ShapeManager(shapes);
             Jarvis jarvis = new Jarvis(null, manager);
-            jarvis.Draw(false);
+            jarvis.Draw(null, false);
             long endTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             Console.WriteLine($"Finished after {endTime - startTime} ms");
             manager.Clear();

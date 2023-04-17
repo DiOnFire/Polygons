@@ -54,7 +54,7 @@ namespace Polygons.ConvexHull
             return cos;
         }
 
-        public List<Shape.Shape> Draw(bool shouldRender = true)
+        public List<Shape.Shape> Draw(Graphics g = null, bool shouldRender = true)
         {
             // Ищем первую точку (индекс в листе точек)
             int firstPoint = FindFirstPoint(ShapeManager.Shapes);
@@ -93,7 +93,7 @@ namespace Polygons.ConvexHull
 
             if (shouldRender)
             {
-                Renderer.Graphics.DrawLine(
+                g.DrawLine(
                 Pen,
                 ShapeManager.Shapes[currentPoint].X + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 0 : Shape.Shape._radius / 2),
                 ShapeManager.Shapes[currentPoint].Y + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 3 : Shape.Shape._radius / 2),
@@ -139,7 +139,7 @@ namespace Polygons.ConvexHull
 
                 if (shouldRender)
                 {
-                    Renderer.Graphics.DrawLine(
+                    g.DrawLine(
                     Pen,
                     ShapeManager.Shapes[currentPoint].X + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 0 : Shape.Shape._radius / 2),
                 ShapeManager.Shapes[currentPoint].Y + (ShapeManager.Shapes[currentPoint].Type == VertexType.TRIANGLE ? 3 : Shape.Shape._radius / 2),
