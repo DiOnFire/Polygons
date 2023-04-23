@@ -10,6 +10,7 @@ namespace Polygons.Util
         private Renderer renderer;
         private DynamicUtil util;
         private Form form;
+        public bool paused;
 
         public TimerUtil(Renderer renderer, Form form)
         {
@@ -34,7 +35,18 @@ namespace Polygons.Util
             myTimer.Interval = 200;
             myTimer.Start();
 
-            
+            paused = false;
+        }
+
+        public void Pause()
+        {
+            myTimer.Stop();
+            paused = true;
+        }
+
+        public void Continue()
+        {
+            myTimer.Start();
         }
 
         public void Stop()
@@ -42,7 +54,7 @@ namespace Polygons.Util
             myTimer.Stop();
             renderer.ShapeManager.RestoreState();
             form.Refresh();
-        
+            paused = false;
         }
     }
 }

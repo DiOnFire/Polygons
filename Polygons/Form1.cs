@@ -16,6 +16,7 @@ namespace Polygons
         private TimerUtil timer;
         private string filePath = "";
         private bool isChanged = false;
+        private Shape.Shape lastShape;
 
         public Form1()
         {
@@ -41,15 +42,16 @@ namespace Polygons
             switch (buffer.SelectedVertex)
             {
                 case VertexType.CIRCLE:
-                    buffer.AddShape(new Circle(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2));
+                    lastShape = new Circle(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2);
                     break;
                 case VertexType.SQUARE:
-                    buffer.AddShape(new Square(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2));
+                    lastShape = new Square(x - Shape.Shape._radius / 2, y - Shape.Shape._radius / 2);
                     break;
                 case VertexType.TRIANGLE:
-                    buffer.AddShape(new Triangle(x, y));
+                    lastShape = new Triangle(x, y);
                     break;
             }
+            buffer.AddShape(lastShape);
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -60,6 +62,7 @@ namespace Polygons
                 if (!buffer.IsDragging)
                 {
                     AddShape(e.X, e.Y);
+                   
                 }
             }
             else
@@ -117,17 +120,6 @@ namespace Polygons
 
             BenchmarkForm form = new BenchmarkForm(storage);
             form.Show();
-        }
-
-        private void dynamicToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dynamicToolStripMenuItem.Checked)
-            {
-                timer.Setup();
-            } else
-            {
-                timer.Stop();
-            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -262,6 +254,38 @@ namespace Polygons
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Check();
+        }
+
+        private void startToolStripMenuItem_Click(object sender, EventArgs e)
+        {             
+            timer.Setup();
+            startToolStripMenuItem.Enabled = false;
+            continueToolStripMenuItem.Enabled = false;
+            resetToolStripMenuItem.Enabled = true;
+            pauseToolStripMenuItem.Enabled = true;
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer.Pause();
+            pauseToolStripMenuItem.Enabled = false;
+            continueToolStripMenuItem.Enabled = true;
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
+            startToolStripMenuItem.Enabled = true;
+            continueToolStripMenuItem.Enabled = false;
+            resetToolStripMenuItem.Enabled = false;
+            pauseToolStripMenuItem.Enabled = false;
+        }
+
+        private void continueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer.Continue();
+            pauseToolStripMenuItem.Enabled = true;
+            continueToolStripMenuItem.Enabled = false;
         }
     }
 }

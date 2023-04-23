@@ -130,10 +130,24 @@ namespace Polygons
             }
         }
 
-        public void ClearGarbage(List<Shape.Shape> used)
+        public bool IsInside(Shape.Shape shape)
         {
-            if (ShapeManager.Shapes.Count < 3) return;
+            List<Shape.Shape> list = GetGarbage(_used);
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] == shape)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<Shape.Shape> GetGarbage(List<Shape.Shape> used)
+        {
+           
             List<Shape.Shape> garbage = new List<Shape.Shape>();
+            if (ShapeManager.Shapes.Count < 3) return garbage;
             for (int i = 0; i < ShapeManager.Shapes.Count; i++)
             {
                 if (!used.Contains(ShapeManager.Shapes[i]))
@@ -141,8 +155,14 @@ namespace Polygons
                     garbage.Add(ShapeManager.Shapes[i]);
                 }
             }
+            return garbage;
+        }
 
-            foreach (Shape.Shape item in garbage)
+        public void ClearGarbage(List<Shape.Shape> used)
+        {
+            
+
+            foreach (Shape.Shape item in GetGarbage(used))
             {
                 ShapeManager.RemoveShape(item);
             }
