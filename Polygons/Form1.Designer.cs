@@ -47,6 +47,7 @@
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.continueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeRadiusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,7 +112,8 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.shapeToolStripMenuItem});
+            this.shapeToolStripMenuItem,
+            this.changeRadiusToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(51, 20);
             this.toolStripMenuItem1.Text = "Vertex";
@@ -208,6 +210,13 @@
             this.continueToolStripMenuItem.Text = "Continue";
             this.continueToolStripMenuItem.Click += new System.EventHandler(this.continueToolStripMenuItem_Click);
             // 
+            // changeRadiusToolStripMenuItem
+            // 
+            this.changeRadiusToolStripMenuItem.Name = "changeRadiusToolStripMenuItem";
+            this.changeRadiusToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.changeRadiusToolStripMenuItem.Text = "Change radius...";
+            this.changeRadiusToolStripMenuItem.Click += new System.EventHandler(this.changeRadiusToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,6 +260,7 @@
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem continueToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeRadiusToolStripMenuItem;
     }
 }
 

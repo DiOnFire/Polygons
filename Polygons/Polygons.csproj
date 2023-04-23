@@ -85,6 +85,12 @@
     <Compile Include="BenchmarkForm.Designer.cs">
       <DependentUpon>BenchmarkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChangeRadiusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeRadiusForm.Designer.cs">
+      <DependentUpon>ChangeRadiusForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,7 @@
     <Compile Include="Src\ConvexHull\Definition.cs" />
     <Compile Include="Src\ConvexHull\IConvexHull.cs" />
     <Compile Include="Src\ConvexHull\Jarvis.cs" />
+    <Compile Include="Src\Events\RadiusChangedArgs.cs" />
     <Compile Include="Src\IO\Serialization\ShapeDeserializer.cs" />
     <Compile Include="Src\IO\Serialization\ShapeSerializer.cs" />
     <Compile Include="Src\Renderer\Renderer.cs" />
@@ -117,6 +124,9 @@
     <Compile Include="Src\Util\TimerUtil.cs" />
     <EmbeddedResource Include="BenchmarkForm.resx">
       <DependentUpon>BenchmarkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeRadiusForm.resx">
+      <DependentUpon>ChangeRadiusForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

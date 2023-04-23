@@ -7,6 +7,7 @@ using Polygons.Util;
 using System.IO;
 using System.Collections.Generic;
 using Polygons.IO;
+using Polygons.Events;
 
 namespace Polygons
 {
@@ -23,6 +24,14 @@ namespace Polygons
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             UpdateStyles();
+        }
+
+        public delegate void RadiusChangedDelegate(object sender, RadiusChangedArgs e);
+
+        public void OnRadiusChange(object sender, RadiusChangedArgs args)
+        {
+            Shape.Shape._radius = args.Radius;
+            Refresh();
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -286,6 +295,13 @@ namespace Polygons
             timer.Continue();
             pauseToolStripMenuItem.Enabled = true;
             continueToolStripMenuItem.Enabled = false;
+        }
+
+        private void changeRadiusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeRadiusForm form = new ChangeRadiusForm();
+            form.RadiusChanged += new RadiusChangedDelegate(OnRadiusChange);
+            form.Show();
         }
     }
 }
